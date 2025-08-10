@@ -1,10 +1,11 @@
-// src/components/Widget.jsx
-function Widget() {
+// src/components/Widget.jsx (com desestruturação)
+// Em vez de 'props', pegamos 'title' e 'children' diretamente do objeto.
+function Widget({ title, children }) {
   return (
     <div className="widget">
-      <h3 className="widget-title">Título do Widget</h3>
+      <h3 className="widget-title">{title}</h3>
       <div className="widget-content">
-        <p>Aqui virá o conteúdo do widget...</p>
+        {children}
       </div>
     </div>
   );
