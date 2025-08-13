@@ -49,3 +49,22 @@ body {
   padding-bottom: 8px;
   font-size: 1.2rem;
 }
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #606770;
+  padding: 0 8px;
+}
+
+.delete-button:hover {
+  color: #1c1e21;
+}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Widget from "./Widget"; // Vamos reutilizar nosso container!
 
-function CurrencyWidget() {
+function CurrencyWidget({ onDelete }) {
   // 1. Estados para os dados, carregamento e erro
   const [cotacoes, setCotacoes] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,11 +49,11 @@ function CurrencyWidget() {
     return null;
   };
 
-  return (
-    <Widget title="Cotações Atuais">
-      {renderContent()}
-    </Widget>
-  );
+    return (
+        <Widget title="Cotações Atuais" onDelete={onDelete}> {/* Passa para o Widget container */}
+            {renderContent()}
+        </Widget>
+    );
 }
 
 export default CurrencyWidget;

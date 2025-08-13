@@ -1,9 +1,17 @@
-// src/components/Widget.jsx (com desestruturação)
-// Em vez de 'props', pegamos 'title' e 'children' diretamente do objeto.
-function Widget({ title, children }) {
+// src/components/Widget.jsx
+
+function Widget({ title, children, onDelete }) { // 1. Recebe a prop onDelete
   return (
     <div className="widget">
-      <h3 className="widget-title">{title}</h3>
+      <div className="widget-header">
+        <h3 className="widget-title">{title}</h3>
+        {/* 2. Se a função onDelete existir, mostra o botão */}
+        {onDelete && (
+          <button onClick={onDelete} className="delete-button">
+            &times; {/* Este é o caractere 'x' de fechar */}
+          </button>
+        )}
+      </div>
       <div className="widget-content">
         {children}
       </div>
