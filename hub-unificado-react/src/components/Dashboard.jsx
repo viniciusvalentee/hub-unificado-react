@@ -37,19 +37,24 @@ function Dashboard() {
     };
 
     return (
-        <main className="dashboard-grid">
-            {widgets.map(widget => {
-                const props = {
-                    key: widget.id,
-                    // Passamos a função de delete, já 'sabendo' o id a ser deletado
-                    onDelete: () => handleDeleteWidget(widget.id)
-                };
+        // p-6: padding
+        <main className="p-6">
+            {/* grid: layout de grid; gap-6: espaçamento entre os itens; grid-cols-1: 1 coluna em telas pequenas;
+                md:grid-cols-2: 2 colunas em telas médias; lg:grid-cols-3: 3 colunas em telas grandes */}
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {widgets.map(widget => {
+                    const props = {
+                        key: widget.id,
+                        onDelete: () => handleDeleteWidget(widget.id)
+                    };
 
-                if (widget.type === 'weather') return <WeatherWidget {...props} />;
-                if (widget.type === 'currency') return <CustomCurrencyWidget {...props} />;
-                if (widget.type === 'tasks') return <TasksWidget {...props} />;
-                return null;
-            })}
+                    // O mapeamento continua igual, ele vai renderizar os componentes que já usam Tailwind
+                    if (widget.type === 'weather') return <WeatherWidget {...props} />;
+                    if (widget.type === 'currency') return <CustomCurrencyWidget {...props} />;
+                    if (widget.type === 'tasks') return <TasksWidget {...props} />;
+                    return null;
+                })}
+            </div>
         </main>
     );
 }
