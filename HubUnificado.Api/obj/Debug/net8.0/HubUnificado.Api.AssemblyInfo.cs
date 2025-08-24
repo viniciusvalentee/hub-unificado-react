@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HubUnificado.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a30a97d913e79f3db4821572023e792815c407a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8d0e5dda7783473db965dc6fea99b72575775786")]
 [assembly: System.Reflection.AssemblyProductAttribute("HubUnificado.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HubUnificado.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
