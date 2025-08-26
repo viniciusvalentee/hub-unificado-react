@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,9 @@ public class UsersController {
     @Autowired // 2. Injeção de dependência: O Spring nos dará uma instância do UserRepository
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping
     public List<User> getAllUsers() {
         // 3. Usa a função findAll() herdado do JpaRepository
@@ -42,7 +46,7 @@ public class UsersController {
         user.setEmail(userDto.email());
         user.setCreatedAt(LocalDateTime.now());
         // ... lógica de hash da senha ...
-        user.setPasswordHash("hashed_placeholder");
+        user.setPasswordHash(passwordEncoder.encode(userDto.password()));
 
         // 5. Usa a função save() para persistir o usuário no banco
         User savedUser = userRepository.save(user);
