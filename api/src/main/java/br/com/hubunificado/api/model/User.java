@@ -1,16 +1,26 @@
 // api/src/main/java/br/com/hubunificado/api/model/User.java
 package br.com.hubunificado.api.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-// Esta é uma classe POJO (Plain Old Java Object)
+@Entity // 1. Anotação que marca esta classe como uma entidade JPA
+@Table(name = "users") // 2. Especifica o nome da tabela no banco (boa prática)
 public class User {
 
+    @Id // 3. Marca este campo como a chave primária (Primary Key)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 4. Diz ao banco para gerar o valor do ID automaticamente
     private Integer id;
+
     private String name;
     private String email;
-    private String passwordHash; // Nunca guardamos a senha em texto puro!
+    private String passwordHash;
     private LocalDateTime createdAt;
+
+    // 5. JPA requer um construtor vazio para criar os objetos
+    public User() {
+    }
 
     // Construtor para facilitar a criação de novos usuários
     public User(Integer id, String name, String email) {
