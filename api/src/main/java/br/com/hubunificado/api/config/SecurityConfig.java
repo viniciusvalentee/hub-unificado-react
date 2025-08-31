@@ -1,34 +1,41 @@
 package br.com.hubunificado.api.config;
 
+import br.com.hubunificado.api.security.JwtAuthFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter; // 1. Injeta nosso filtro
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Desabilitar CSRF, pois não usaremos sessões baseadas em cookies
-                .csrf(csrf -> csrf.disable())
-                // Definir as regras de autorização
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Permite acesso público ao console do H2
                         .requestMatchers("/h2-console/**").permitAll()
-                        // Permite acesso público aos endpoints de criação de usuário e login
-                        .requestMatchers("/api/users", "/api/auth/login").permitAll()
-                        // Qualquer outra requisição precisa de autenticação
+                        // Agora, o POST para /api/users é para registro, deve ser público
+                        // O GET será protegido
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                // 2. Adiciona nosso filtro para rodar ANTES do filtro padrão de autenticação
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // Permite que o console H2 seja exibido em um frame (necessário)
-        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()));
+        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
         return http.build();
     }
